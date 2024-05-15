@@ -1,17 +1,25 @@
 <h1 class="margin">Articles</h1>
 
-@for(article of articleList$ |async; track article.id){
-<div class="article-wrapper" [routerLink]="['./view/'+article.id]">
- <div class="data_wrapper">
+@if (!loading) { @for(article of articleList; track article.id){
+<div class="article-wrapper" [routerLink]="['./view/' + article.id]">
+  <div class="data_wrapper">
     <strong class="article_title">{{ article.title }}</strong>
     <small class="article_likes">{{ article.likes }}</small>
- </div>
-  <div class="data_wrapper ">
-    <small class="article_author">By <strong>{{ article.author }}</strong></small>
+  </div>
+  <div class="data_wrapper">
+    <small class="article_author"
+      >By <strong>{{ article.author }}</strong></small
+    >
     <small class="article_pusblish_date">{{
       article.publishDate | date : "mediumDate"
     }}</small>
   </div>
 </div>
 <br />
+} }
+
+@else{
+  <div class="loading">
+      Loading...
+  </div>
 }

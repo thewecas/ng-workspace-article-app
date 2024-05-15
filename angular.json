@@ -33,7 +33,12 @@
               "projects/user-app/src/styles.scss",
               "projects/shared/src/style.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "projects/user-app/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/user-app/server.ts"
+            }
           },
           "configurations": {
             "production": {

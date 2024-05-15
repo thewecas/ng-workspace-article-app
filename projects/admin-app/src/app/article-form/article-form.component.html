@@ -1,8 +1,11 @@
+
 <div class="data_wrapper margin">
-  <h1 class="article_title margin">{{title || ''}}</h1>
-  <button [routerLink]="['../../']" >Back</button>
+  <h3 class="margin left_pad">{{title }}</h3>
+  <button class="float_btn visible" [routerLink]="['../../']" >Back</button>
 </div>
-<form class="article_form" [formGroup]="articleForm">
+
+@if (!loading) {
+<form class="article_form" [formGroup]="articleForm" >
   <div class="formControl">
     <textarea wrap="hard" class="control"  libAutoResize  formControlName="title" id="title" placeholder="Article Title" ></textarea>
     <label for="title">Article Title</label>
@@ -21,3 +24,9 @@
     <button class="submit_btn" type="submit" (click)="saveArticle()">Save</button>
   </div>
 </form>
+}
+@else{
+  <div class="loading">
+      Loading...
+  </div>
+}

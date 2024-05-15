@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Article, SharedService } from '@shared-lib';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-list-articles',
@@ -13,12 +12,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ListArticlesComponent implements OnInit{
 
-  articleList$!: BehaviorSubject<Article[]>;
+  articleList!:Article[] ;
+  loading:boolean= false;
 
   constructor(private service:SharedService){}
 
   ngOnInit(): void {
-    this.articleList$ = this.service.getData();
+    this.loading = true;
+    this.service.getData().subscribe({
+      next:(res:any) => {
+        this.articleList = res; 
+      },
+      error: () => this.loading = false,
+      complete: () => this.loading = false
+    });
   }
 
 }

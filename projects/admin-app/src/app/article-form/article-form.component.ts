@@ -7,32 +7,45 @@ import { Article, AutoResizeDirective, SharedService } from '@shared-lib';
 @Component({
   selector: 'app-article-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterLink, AutoResizeDirective],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, AutoResizeDirective],
   templateUrl: './article-form.component.html',
   styleUrl: './article-form.component.scss'
 })
 export class ArticleFormComponent implements OnInit, OnDestroy {
   article!: Article | null;
   articleForm!: FormGroup;
-  title: string | null = 'New Article';
-  isNew!: boolean ;
+  title: string | null = 'Article';
+  isNew!: boolean;
+  loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SharedService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SharedService) {
+   }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => {
       if (param.id) {
-        this.article = this.service.getDataById(param.id);
-        this.initializeForm(this.article); this.title = null;
-        this.isNew = false;
+        this.loading = true;
+        this.service.getDataById(param.id).subscribe({
+          next: (res: any) => {
+            this.article = res;
+            this.initializeForm(this.article);
+            this.title = 'Article';
+            this.isNew = false;
+          },
+          error:()=> this.loading = false,
+          complete: () => this.loading = false
+        });
       }
       else {
         this.initializeForm();
         this.isNew = true;
+        this.title='New Article'
       }
 
     });
-    document.querySelector('#new_article_btn')?.classList.add('hidden')
+    document.querySelector('#new_article_btn')?.classList.add('hidden');
+
+    
   }
 
   initializeForm(data: Article | null = null) {
@@ -44,27 +57,27 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   }
 
   saveArticle() {
-    
-    const preparedData: Article = {
-      id: this.article?.id ?? crypto.randomUUID(),
+    const preparedData = {
       title: this.articleForm.value.title,
       content: this.articleForm.value.content,
       author: this.articleForm.value.author,
       publishDate: new Date().toString(),
-      likes:this.article?.likes ?? 0
-    }
-    this.service.updateArticle(preparedData);
+      likes: this.article?.likes ?? Math.ceil(Math.random() * 1000)
+    };
+    this.service.updateArticle(preparedData, this.article?.id).subscribe();
     this.isNew = false;
   }
 
   deleteArticle() {
     if (this.article)
-      this.service.removeArticle(this.article?.id);
-    this.router.navigate(['../../'])
+      this.service.removeArticle(this.article?.id).subscribe({
+        complete: () => this.router.navigate(['../../'])
+      });
+    ;
   }
 
   ngOnDestroy(): void {
-    document.querySelector('#new_article_btn')?.classList.remove('hidden')
+    document.querySelector('#new_article_btn')?.classList.remove('hidden');
 
   }
 }
