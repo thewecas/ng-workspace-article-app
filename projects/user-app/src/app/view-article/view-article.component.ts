@@ -13,14 +13,26 @@ import { Article, SharedService } from '@shared-lib';
 export class ViewArticleComponent implements OnInit {
 
   article!: Article | null;
+  loading: boolean = false;
   constructor(private route: ActivatedRoute, private router: Router, private service: SharedService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => {
-      this.article = this.service.getDataById(param.id);
-      if (!this.article) {
-        this.router.navigate(['../../']);
-      }
+      this.loading = true;
+      this.service.getDataById(param.id).subscribe({
+        next: (res: any) => {
+          this.article = res;
+
+        },
+        error: _ => {
+          this.loading = false;
+          this.router.navigate(['../../']);
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
+
     });
   }
 

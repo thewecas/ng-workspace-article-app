@@ -3,6 +3,8 @@
     <h3>Article</h3>
     <button [routerLink]="['../../']" >Back</button>
 </div>
+@if (!loading) {
+
 <h2 class="article_title margin">{{article?.title}}</h2>
 
 <div class="data_wrapper">
@@ -11,5 +13,11 @@
     <small>Published on <strong>{{article?.publishDate| date:'mediumDate'}}</strong></small>
 </div>
 <hr>
-
 <p class="article_content">{{article?.content}}</p>
+}
+
+@else{
+    <div class="loading">
+        Loading...
+    </div>
+}
