@@ -1,0 +1,23 @@
+<div class="data_wrapper margin">
+  <h1 class="article_title margin">{{title || ''}}</h1>
+  <button [routerLink]="['../../']" >Back</button>
+</div>
+<form class="article_form" [formGroup]="articleForm">
+  <div class="formControl">
+    <textarea wrap="hard" class="control"  libAutoResize  formControlName="title" id="title" placeholder="Article Title" ></textarea>
+    <label for="title">Article Title</label>
+  </div>
+  <div class="formControl">
+    <textarea class="control author" libAutoResize  type="text" formControlName="author" id="author" placeholder="Author Name" ></textarea>
+    <label for="author">Author Name</label>
+  </div>
+  <div class="formControl">
+    <textarea wrap="hard" class="control content" libAutoResize  type="text" formControlName="content" id="content" placeholder="Article Content"></textarea>
+    <label for="content">Content</label>
+  </div>
+
+  <div class="btn_container">
+    <button type="button" class="danger_btn" (click)="deleteArticle()" *ngIf="!isNew"> Delete</button>
+    <button class="submit_btn" type="submit" (click)="saveArticle()">Save</button>
+  </div>
+</form>

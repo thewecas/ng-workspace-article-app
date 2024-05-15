@@ -1,0 +1,15 @@
+
+<div class="data_wrapper margin">
+    <h3>Article</h3>
+    <button [routerLink]="['../../']" >Back</button>
+</div>
+<h2 class="article_title margin">{{article?.title}}</h2>
+
+<div class="data_wrapper">
+    <small>Author : <strong>{{article?.author}}</strong></small>
+    <small class="article_likes"> {{article?.likes}}</small>
+    <small>Published on <strong>{{article?.publishDate| date:'mediumDate'}}</strong></small>
+</div>
+<hr>
+
+<p class="article_content">{{article?.content}}</p>
