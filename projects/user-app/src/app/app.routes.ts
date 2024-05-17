@@ -2,16 +2,16 @@ import { Routes } from '@angular/router';
 import { ListArticlesComponent } from '@shared-lib';
 import { ViewArticleComponent } from './view-article/view-article.component';
 
-export const routes: Routes = [{
-    path: '',
-    redirectTo: 'article',
-    pathMatch: 'full'
-},
+export const routes: Routes = [
 {
-    path: 'article',
+    path: '',
     component: ListArticlesComponent
 }, {
-    path: 'article/view/:id',
+    path: 'view/:id',
     component: ViewArticleComponent
-}
+    },
+    {
+        path: '**',
+        redirectTo: '',
+    }
 ];

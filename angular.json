@@ -27,7 +27,14 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/user-app/src/favicon.ico",
-              "projects/user-app/src/assets"
+              "projects/user-app/src/assets",
+              "projects/user-app/src/manifest.webmanifest",
+              "projects/user-app/src/robots.txt",
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": [
               "projects/user-app/src/styles.scss",
@@ -54,7 +61,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "projects/user-app/ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -93,7 +101,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/user-app/src/favicon.ico",
-              "projects/user-app/src/assets"
+              "projects/user-app/src/assets",
+              "projects/user-app/src/manifest.webmanifest"
             ],
             "styles": [
               "projects/user-app/src/styles.scss"
@@ -127,7 +136,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/admin-app/src/favicon.ico",
-              "projects/admin-app/src/assets"
+              "projects/admin-app/src/assets",
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": [
               "projects/admin-app/src/styles.scss",
